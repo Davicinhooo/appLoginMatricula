@@ -53,4 +53,9 @@ class LoginController extends Controller
         $device = $request->header("User-Agent");
         $request->session()->put('device', $device);
     }
+
+    public function loggedOut(Request $request)
+    {
+        return redirect('/login');
+    }
 }
