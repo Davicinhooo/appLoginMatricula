@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-
+use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -42,29 +42,15 @@ class LoginController extends Controller
     }
 
     public function redirectToGoogle(){
-        return Socialite::driver("google")->redirect();
+        return Socialite::driver("google")->with(['prompt' => 'select_account'])->redirect();
     }
 
     public function handleGoogleCallback(){
-        $googleUser = Socialite::driver("google")->user();
-        $user = User::firstOrCreate(
-            ['email' => $googleUser->email],
-            [
-                'name' => $googleUser->name,
-                'password' => bcrypt('unapassword_segura_123') // Requisito si tu tabla exige password
-            ]
-        );
-    
-        // 3. Ahora sí, iniciamos sesión con el modelo de tu base de datos
-        Auth::login($user);
-    
-        // 4. Redirigimos al dashboard
-        return redirect('/dashboard');
+        $user = Socialite::driver("google")->user();
     }
 
-    public function authenticated(\Illuminate\Http\Request $request, User $user){
+    public function authenticated( Request $request, User $user){
         $device = $request->header("User-Agent");
         $request->session()->put('device', $device);
-        //$user->session()->create(["device" => $device]);
     }
 }
