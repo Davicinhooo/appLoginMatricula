@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card mt-4">
                 <div class="card-header bg-white">
-                    Panel de Control - Sistema de Matrícula
+                    Panel de Estudiante
                 </div>
 
                 <div class="card-body text-center py-5">
@@ -20,7 +20,7 @@
                     <p class="text-muted">Has iniciado sesión correctamente.</p>
                     
                     <div class="mt-4">
-                        <p>Desde aquí podrás gestionar todo el sistema.</p>
+                        <p>Desde aquí podrás gestionar todo referente a tu carrera.</p>
                     </div>
                 </div>
             </div>

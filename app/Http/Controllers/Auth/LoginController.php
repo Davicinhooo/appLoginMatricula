@@ -45,9 +45,22 @@ class LoginController extends Controller
         return Socialite::driver("google")->with(['prompt' => 'select_account'])->redirect();
     }
 
-    public function handleGoogleCallback(){
-        $user = Socialite::driver("google")->user();
-    }
+    public function handleGoogleCallback()
+{
+    $googleUser = Socialite::driver('google')->stateless()->user();
+
+    $user = User::firstOrCreate(
+        ['email' => $googleUser->email],
+        [   
+            'name' => $googleUser->name,
+            'password' => bcrypt('password_generica_google_123')
+        ]
+    );
+
+    Auth::login($user);
+
+    return redirect('/dashboard');
+}
 
     public function authenticated( Request $request, User $user){
         $device = $request->header("User-Agent");
